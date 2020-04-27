@@ -1,6 +1,7 @@
 import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from flask_marshmallow import Marshmallow
 
 
 db_user = os.environ["MYSQL_USER"]
@@ -11,3 +12,6 @@ db_name = os.environ["MYSQL_DATABASE"]
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+pymysql://{db_user}:{db_password}@{db_server}/{db_name}?charset=utf8mb4'
 db = SQLAlchemy(app)
+ma = Marshmallow(app)
+
+from cvapp import routes
