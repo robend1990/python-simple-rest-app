@@ -3,7 +3,7 @@ create table if not exists user
     id         int auto_increment primary key,
     last_name  varchar(100) not null,
     first_name varchar(100) not null,
-    cv_url     varchar(255) null
+    cv_url     varchar(400) null
 );
 
 create table if not exists skill

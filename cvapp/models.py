@@ -14,7 +14,7 @@ class DbUser(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     last_name = db.Column(db.String(100), nullable=False)
     first_name = db.Column(db.String(100), nullable=False)
-    cv_url = db.Column(db.String(255), nullable=True)
+    cv_url = db.Column(db.String(400), nullable=True)
     skill_associations = db.relationship('DbUserSkillAssociation', lazy=True, cascade="all, delete-orphan")
 
 
