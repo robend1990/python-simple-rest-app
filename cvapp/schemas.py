@@ -1,11 +1,11 @@
 from cvapp import ma
 from marshmallow import fields
-from cvapp.models import User
+from cvapp.models import DbUser
 
 
 class UserSchema(ma.SQLAlchemySchema):
     class Meta:
-        model = User
+        model = DbUser
 
     id = ma.auto_field()
     last_name = ma.auto_field()

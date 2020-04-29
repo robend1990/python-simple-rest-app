@@ -11,6 +11,7 @@ db_name = os.environ["MYSQL_DATABASE"]
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+pymysql://{db_user}:{db_password}@{db_server}/{db_name}?charset=utf8mb4'
+app.config['SQLALCHEMY_ECHO'] = True
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
 
