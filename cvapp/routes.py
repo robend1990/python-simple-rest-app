@@ -1,14 +1,18 @@
+from sqlalchemy.orm import joinedload
 from cvapp import app
 from flask import jsonify
 from flask import abort
-from cvapp.models import DbUser
+from cvapp.models import DbUser, DbUserSkillAssociation
 from cvapp.schemas import users_schema, user_schema
 from cvapp import db
 
 
 @app.route('/users', methods=['GET'])
 def get_all_users():
-    return jsonify(users_schema.dump(DbUser.query.all())), 200
+    users = db.session.query(DbUser).options(joinedload(DbUser.skill_associations)
+                                             .subqueryload(DbUserSkillAssociation.skill)
+                                             ).all()
+    return jsonify(users_schema.dump(users)), 200
 
 
 @app.route('/users/<int:user_id>', methods=['GET'])
@@ -28,7 +32,8 @@ def delete_user(user_id):
     db.session.commit()
     return '', 204
 
-#TODO: create_user endpoint
+
+# TODO: create_user endpoint
 
 
 @app.errorhandler(404)
