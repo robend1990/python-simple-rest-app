@@ -3,6 +3,7 @@
 - Python 3.7 or greater
 - virtualenv
 - Properly configured `default` profile in `~/.aws/credentials` with access to read/write S3 resources
+- docker
 - make 
 
 # Developer guide
