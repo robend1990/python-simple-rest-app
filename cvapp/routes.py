@@ -35,6 +35,7 @@ def delete_user(user_id):
     user = DbUser.query.get(user_id)
     if user is None:
         return abort(404, description=f'User with id {user_id} was not found')
+    remove_cv_from_s3(user)
     db.session.delete(user)
     db.session.commit()
     return '', 204
@@ -93,5 +94,14 @@ def associate_user_with_skills(user, skills_to_associate):
         user_skill_association = DbUserSkillAssociation(skill=skill, level=skill_level)
         user.skill_associations.append(user_skill_association)
 
-# TODO: Add removal of the file from s3 inside delete_user
+
+def remove_cv_from_s3(user):
+    s3 = boto3.client('s3')
+    key = f'{user.last_name}/{user.first_name}/cv'
+    head_response = s3.head_object(Bucket=s3_bucket_name, Key=key)
+    if not head_response:
+        # nothing to delete
+        return
+    s3.delete_object(Bucket=s3_bucket_name, Key=key)
+
 # TODO: move some business logic to its own module and add some exception handling
