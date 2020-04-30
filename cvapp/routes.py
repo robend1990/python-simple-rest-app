@@ -19,7 +19,7 @@ class CustomInternalServerError(HTTPException):
     description = 'Internal Server Error'
 
 
-@app.route('/user', methods=['GET'])
+@app.route('/users', methods=['GET'])
 def get_all_users():
     users = db.session.query(DbUser).options(joinedload(DbUser.skill_associations)
                                              .subqueryload(DbUserSkillAssociation.skill)
@@ -29,7 +29,7 @@ def get_all_users():
     return jsonify(users_schema.dump(users)), 200
 
 
-@app.route('/user/<int:user_id>', methods=['GET'])
+@app.route('/users/<int:user_id>', methods=['GET'])
 def get_user(user_id):
     user = db.session.query(DbUser).options(joinedload(DbUser.skill_associations)
                                             .subqueryload(DbUserSkillAssociation.skill)
@@ -40,7 +40,7 @@ def get_user(user_id):
     return jsonify(user_schema.dump(user)), 200
 
 
-@app.route('/user/<int:user_id>', methods=['DELETE'])
+@app.route('/users/<int:user_id>', methods=['DELETE'])
 def delete_user(user_id):
     user = DbUser.query.get(user_id)
     if user is None:
@@ -51,7 +51,7 @@ def delete_user(user_id):
     return '', 204
 
 
-@app.route('/user', methods=['POST'])
+@app.route('/users', methods=['POST'])
 def create_user_with_associations():
     user, skills_to_associate = user_schema.load(request.get_json())
     cv_s3_key = copy_file_from_url_to_s3(user)
