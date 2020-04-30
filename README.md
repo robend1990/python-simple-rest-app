@@ -63,11 +63,11 @@ Example response:
 ```
 
 - /users/<int:user_id> [GET]  
-Returns json object with information about one particular user with id that is given in `user_id` path param.
-If CV file for user exists then cv_url property in the response is replaced with presigned url to CV that is stored on S3.
+Returns json object with information about one particular user - with id that is given in `user_id` path param.
+If CV file for user exists, then cv_url property in the response is replaced with presigned url to CV that is stored on S3.
 Responds with status code 200 if succeeded.
 
 - /users/<int:user_id> [DELETE]
 Removes user with given id. If CV for user exists in S3, then object is also removed.
-If any skills associations for uses exist then they are removed as well
+If any skills associations for user exist, then they are removed as well.
 Responds with status code 204 if succeeded.
